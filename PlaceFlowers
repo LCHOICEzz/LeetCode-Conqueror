@@ -69,3 +69,47 @@ bool canPlaceFlowers(int* flowerbed, int flowerbedSize, int n)
     else
         return false;
 }
+//改进方法，用连续3个量判断，且在头和尾处增加2个为0的变量
+bool canPlaceFlowers(int* flowerbed, int flowerbedSize, int n)
+{
+    int max = 0;
+    int i = 0;
+    int start=0;
+    int end = 0;
+    int flag = 1;
+    if(flowerbedSize == 1)
+    {
+        flag = start | flowerbed[0] | end;
+        if(!flag)
+        {
+            max++;
+        }
+    }
+    else
+    {
+        for(i = 0;i < flowerbedSize; i++)
+        {
+            if(i == 0)
+            {
+                flag = start | flowerbed[i] | flowerbed[i+1]; 
+            }
+            else if(i == flowerbedSize-1)
+            {
+                flag = flowerbed[i-1] | flowerbed[i] | end;
+            } 
+            else
+            {
+                flag = flowerbed[i-1] | flowerbed[i] | flowerbed[i+1];
+            }
+            if(0 == flag)
+            {
+                flowerbed[i] = 1;
+                max++;
+            } 
+        }
+    }
+    if(max>=n)
+        return true;
+    else
+        return false;
+}
